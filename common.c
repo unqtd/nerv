@@ -39,4 +39,11 @@ inline void init_pwm(const uint8_t timer) {
   _init_fast_pwm(timer);
 }
 
+#define PWM_SCOPE(TIMER, BLOCK)                                                \
+  {                                                                            \
+    init_pwm(TIMER);                                                           \
+    BLOCK                                                                      \
+    _turn_of_pwm(TIMER);                                                       \
+  }
+
 #endif // !DEBUG
