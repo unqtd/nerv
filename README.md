@@ -38,6 +38,7 @@ $ git clone https://github.com/dx3mod/nerv.git vendor/nerv && rm -rf ./vendor/ne
 
 Основное:
 * [Руководство по использованию](./docs/guide.md)
+* [Таблица макросов настройки](./docs/table_of_defines.md)
 * [Узкие места](./docs/bottlenecks.md)
 
 Дополнительное:
