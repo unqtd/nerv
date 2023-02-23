@@ -1,4 +1,5 @@
 #include "../util.h"
+#include <stdint.h>
 
 #ifndef _NERV_ATTINY13_H
 #define _NERV_ATTINY13_H
@@ -6,7 +7,7 @@
 #if defined(__AVR_ATtiny13__) || defined(__AVR_ATtiny13A__)
 
 ///////////////////////////////////////////////////////////
-// Digital
+// Common
 
 inline port_t const *_get_port(pin_t pin) {
   static port_t const portb = {&DDRB, &PORTB, &PINB};
@@ -25,10 +26,16 @@ inline uint8_t _get_port_pin(pin_t pin) {
 ///////////////////////////////////////////////////////////
 // PWM
 
+inline void _init_fast_pwm_prescaler(const uint8_t timer) {
+  if (timer == 0) {
+    TCCR0B |= bit(CS01);
+  }
+}
+
 inline void _init_fast_pwm(const uint8_t timer) {
   if (timer == 0) {
     TCCR0A |= bit(WGM01) | bit(WGM00);
-    TCCR0B |= bit(CS01);
+    _init_fast_pwm_prescaler(timer);
   }
 }
 
@@ -43,7 +50,7 @@ inline void _init_pwm_pin(const uint8_t pin) {
   }
 }
 
-inline void _set_pwm_on_pin(pin_t pin, const uint8_t value) {
+inline void _set_pwm_on_pin(pin_t pin, const uint16_t value) {
   switch (pin) {
   case 1:
     OCR0B = value;
@@ -54,13 +61,29 @@ inline void _set_pwm_on_pin(pin_t pin, const uint8_t value) {
   }
 }
 
-///////////////////////////////////////////////////////////
-// Timers
-
-inline void _stop_timer(const uint8_t timer) {
+inline void _turn_of_pwm(const uint8_t timer) {
   if (timer == 0) {
     TCCR0B &= ~(bit(CS02) | bit(CS01) | bit(CS00));
   }
+}
+
+///////////////////////////////////////////////////////////
+// Timers
+
+inline uint8_t _get_timer(const uint8_t pin) { return 0; }
+
+///////////////////////////////////////////////////////////
+// ADC
+
+inline uint16_t _adc_read(const uint8_t pin) {
+  ADCSRA = _BV(ADEN) | _BV(ADSC);
+  ADMUX = (ADMUX & 0xFC) | pin;
+  while (ADCSRA & bit(ADSC))
+    ;
+
+  const uint16_t value = ADCW;
+  ADCSRA = 0;
+  return value;
 }
 
 #endif

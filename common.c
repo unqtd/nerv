@@ -3,7 +3,14 @@
 #ifndef _COMMON_H
 #define _COMMON_H
 
-typedef enum PinMode { INPUT, INPUT_PULLUP, OUTPUT, OUTPUT_ANALOG } pinmode_t;
+typedef enum PinMode {
+  // Input
+  INPUT,
+  INPUT_PULLUP,
+  // Output
+  OUTPUT,
+  OUTPUT_ANALOG
+} pinmode_t;
 
 /// Устанавливает режим работы пина.
 inline void init_pin(pin_t pin, const pinmode_t mode) {
@@ -30,11 +37,6 @@ inline void init_pin(pin_t pin, const pinmode_t mode) {
 inline void init_pwm(const uint8_t timer) {
   // ...
   _init_fast_pwm(timer);
-}
-
-inline void stop_timer(const uint8_t timer) {
-  // ...
-  _stop_timer(timer);
 }
 
 #endif // !DEBUG

@@ -52,7 +52,8 @@ $ git clone https://github.com/dx3mod/nerv.git vendor/nerv && rm -rf ./vendor/ne
 Первый этап:
 - [X] `digital_write`, `digital_read`
 - [X] `analog_write`
-- [ ] `analog_read`
+- [X] `analog_read`
+- [ ] 16-bit analog_write
 
 Следующий этап:
 - [ ] `shiftIn`, `shiftOut`

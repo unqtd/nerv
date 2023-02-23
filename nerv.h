@@ -22,12 +22,17 @@ inline port_t const *_get_port(pin_t pin);
 inline uint8_t _get_port_pin(pin_t pin);
 
 // PWM
+inline void _init_fast_pwm_prescaler(const uint8_t timer);
 inline void _init_fast_pwm(const uint8_t timer);
 inline void _init_pwm_pin(const uint8_t pin);
-inline void _set_pwm_on_pin(pin_t pin, const uint8_t value);
+inline void _set_pwm_on_pin(pin_t pin, const uint16_t value);
+inline void _turn_of_pwm(const uint8_t timer);
 
 // Timers
-inline void _stop_timer(const uint8_t timer);
+inline uint8_t _get_timer(pin_t pin);
+
+// ADC
+inline uint16_t _adc_read(pin_t pin);
 
 /////////////////////////////////////////////////////////
 /// Подключения используемой реализации.

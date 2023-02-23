@@ -4,12 +4,29 @@
 #define _NERV_ANALOG_H
 
 inline void analog_write(pin_t pin, const uint8_t value) {
-  if (value == 0)
-    digital_write(pin, LOW);
-  else if (value == 255)
-    digital_write(pin, HIGH);
+  const uint8_t timer = _get_timer(pin);
 
-  _set_pwm_on_pin(pin, value);
+  if (value == 0) {
+#ifndef ANALOG_WRITE_WITHOUT_ZERO
+    _turn_of_pwm(timer);
+    digital_write(pin, LOW);
+#endif
+  }
+#ifdef ANALOG_WRITE_255
+  else if (value == 255) {
+    _turn_of_pwm(timer);
+    digital_write(pin, HIGH);
+  }
+#endif
+  else {
+    _init_fast_pwm_prescaler(timer);
+    _set_pwm_on_pin(pin, value);
+  }
+}
+
+inline uint16_t analog_read(pin_t pin) {
+  // ...
+  return _adc_read(pin);
 }
 
 #endif

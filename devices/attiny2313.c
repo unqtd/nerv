@@ -1,4 +1,5 @@
 #include "../util.h"
+#include <stdint.h>
 
 #ifndef _ATTINY_2313_H
 #define _ATTINY_2313_H
@@ -6,7 +7,7 @@
 #if defined(__AVR_ATtiny2313A__) || defined(__AVR_ATtiny2313__)
 
 ///////////////////////////////////////////////////////////
-// Digital
+// Common
 
 inline port_t const *_get_port(const uint8_t pin) {
   static port_t const portb = {&DDRB, &PORTB, &PINB};
@@ -62,7 +63,7 @@ inline void _init_pwm_pin(const uint8_t pin) {
   }
 }
 
-inline void _set_pwm_on_pin(const uint8_t pin, const uint8_t value) {
+inline void _set_pwm_on_pin(const uint8_t pin, const uint16_t value) {
   switch (pin) {
   case 7:
     OCR0B = value;
@@ -79,10 +80,7 @@ inline void _set_pwm_on_pin(const uint8_t pin, const uint8_t value) {
   }
 }
 
-///////////////////////////////////////////////////////////
-// Timers
-
-inline void _stop_timer(const uint8_t timer) {
+inline void _turn_of_pwm(const uint8_t timer) {
   switch (timer) {
   case 0:
     TCCR0B &= ~(bit(CS02) | bit(CS01) | bit(CS00));
@@ -92,6 +90,21 @@ inline void _stop_timer(const uint8_t timer) {
     break;
   }
 }
+
+///////////////////////////////////////////////////////////
+// Timers
+
+inline uint8_t _get_timer(const uint8_t pin) {
+  if (pin == 12 || pin == 13)
+    return 1;
+  else
+    return 0;
+}
+
+///////////////////////////////////////////////////////////
+// ADC
+
+inline uint16_t _adc_read() { return 0; }
 
 #endif // !__AVR_ATtiny2313A__
 #endif // !_2313_H
