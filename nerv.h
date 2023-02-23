@@ -27,8 +27,12 @@ inline void _set_pwm_on_pin(pin_t pin, const uint8_t value);
 inline void _stop_timer(const uint8_t timer);
 
 #if defined(__AVR_ATtiny2313A__) || defined(__AVR_ATtiny2313__)
-#include "./devices/2313.c"
+#include "./devices/attiny2313.c"
 #endif // !__AVR_ATtiny2313A__
+
+#if defined(__AVR_ATtiny13__) || defined(__AVR_ATtiny13A__)
+#include "./devices/attiny13.c"
+#endif // defined(__AVR_ATtiny13__)
 
 #include "common.c"
 #include "digital.c"

@@ -1,7 +1,7 @@
 #include "../util.h"
 
-#ifndef _2313_H
-#define _2313_H
+#ifndef _ATTINY_2313_H
+#define _ATTINY_2313_H
 
 #if defined(__AVR_ATtiny2313A__) || defined(__AVR_ATtiny2313__)
 
