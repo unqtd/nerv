@@ -14,6 +14,9 @@ typedef struct Port {
   volatile uint8_t *ddr, *port, *pin;
 } port_t;
 
+/////////////////////////////////////////////////////////
+// Функции для реализации под конкретную модель МК.
+
 // Digital
 inline port_t const *_get_port(pin_t pin);
 inline uint8_t _get_port_pin(pin_t pin);
@@ -26,6 +29,9 @@ inline void _set_pwm_on_pin(pin_t pin, const uint8_t value);
 // Timers
 inline void _stop_timer(const uint8_t timer);
 
+/////////////////////////////////////////////////////////
+/// Подключения используемой реализации.
+
 #if defined(__AVR_ATtiny2313A__) || defined(__AVR_ATtiny2313__)
 #include "./devices/attiny2313.c"
 #endif // !__AVR_ATtiny2313A__
@@ -34,9 +40,11 @@ inline void _stop_timer(const uint8_t timer);
 #include "./devices/attiny13.c"
 #endif // defined(__AVR_ATtiny13__)
 
+/////////////////////////////////////////////////////////
+
+#include "util.h"
 #include "common.c"
 #include "digital.c"
 #include "analog.c"
-#include "util.h"
 
 #endif // !_NERV_H
