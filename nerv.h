@@ -22,8 +22,8 @@ inline port_t const *_get_port(pin_t pin);
 inline uint8_t _get_port_pin(pin_t pin);
 
 // PWM
-inline void _init_fast_pwm_prescaler(const uint8_t timer);
-inline void _init_fast_pwm(const uint8_t timer);
+inline void _init_pwm_prescaler(const uint8_t timer);
+inline void _init_pwm(const uint8_t timer);
 inline void _init_pwm_pin(pin_t pin);
 inline void _set_pwm_on_pin(pin_t pin, const uint16_t value);
 inline void _turn_of_pwm(const uint8_t timer);
