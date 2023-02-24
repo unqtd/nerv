@@ -24,7 +24,7 @@ inline uint8_t _get_port_pin(pin_t pin);
 // PWM
 inline void _init_fast_pwm_prescaler(const uint8_t timer);
 inline void _init_fast_pwm(const uint8_t timer);
-inline void _init_pwm_pin(const uint8_t pin);
+inline void _init_pwm_pin(pin_t pin);
 inline void _set_pwm_on_pin(pin_t pin, const uint16_t value);
 inline void _turn_of_pwm(const uint8_t timer);
 
@@ -32,6 +32,9 @@ inline void _turn_of_pwm(const uint8_t timer);
 inline uint8_t _get_timer(pin_t pin);
 
 // ADC
+inline void _adc_start();
+inline void _adc_stop();
+inline void _init_adc_pin(pin_t pin);
 inline uint16_t _adc_read(pin_t pin);
 
 /////////////////////////////////////////////////////////
@@ -43,6 +46,8 @@ inline uint16_t _adc_read(pin_t pin);
 
 #if defined(__AVR_ATtiny13__) || defined(__AVR_ATtiny13A__)
 #include "./devices/attiny13.c"
+#else
+#error Not impl
 #endif // defined(__AVR_ATtiny13__)
 
 /////////////////////////////////////////////////////////

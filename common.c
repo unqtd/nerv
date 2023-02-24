@@ -7,6 +7,7 @@ typedef enum PinMode {
   // Input
   INPUT,
   INPUT_PULLUP,
+  INPUT_ANALOG,
   // Output
   OUTPUT,
   OUTPUT_ANALOG
@@ -24,6 +25,9 @@ inline void init_pin(pin_t pin, const pinmode_t mode) {
     *port->port |= bit(bit);
   case INPUT:
     *port->ddr &= ~bit(bit);
+    break;
+  case INPUT_ANALOG:
+    _init_adc_pin(pin);
     break;
   case OUTPUT_ANALOG:
     _init_pwm_pin(pin);

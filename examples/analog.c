@@ -11,9 +11,12 @@ int main() {
   init_pwm(0);
 
   init_pin(LED, OUTPUT_ANALOG);
+  init_pin(P, INPUT_ANALOG);
 
   while (1) {
-    const uint16_t p_scale = analog_read(P);
-    analog_write(LED, map(p_scale, 0, 1023, 0, 255));
+    WITH_ADC({
+      const uint16_t p_scale = analog_read(P);
+      analog_write(LED, map(p_scale, 0, 1023, 0, 255));
+    })
   }
 }
