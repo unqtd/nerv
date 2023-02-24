@@ -3,7 +3,7 @@
 #ifndef _NERV_ANALOG_H
 #define _NERV_ANALOG_H
 
-inline void analog_write(pin_t pin, const uint8_t value) {
+inline void analog_write(pin_t pin, const uint16_t value) {
   _set_pwm_on_pin(pin, value);
 }
 

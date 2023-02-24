@@ -34,14 +34,15 @@ inline void init_pin(pin_t pin, const pinmode_t mode) {
 }
 
 /// Настраивает выбранный таймер для работы с ШИМ.
-inline void init_pwm(const uint8_t timer) {
+inline void init_pwm(const uint8_t timer, const prescaler_t prescaler) {
   // ...
   _init_pwm(timer);
+  _init_pwm_prescaler(timer, prescaler);
 }
 
-#define PWM_SCOPE(TIMER, BLOCK)                                                \
+#define PWM_SCOPE(TIMER, PRESCALER, BLOCK)                                     \
   {                                                                            \
-    init_pwm(TIMER);                                                           \
+    init_pwm(TIMER, PRESCALER);                                                \
     BLOCK                                                                      \
     _turn_of_pwm(TIMER);                                                       \
   }

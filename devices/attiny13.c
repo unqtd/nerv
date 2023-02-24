@@ -26,7 +26,7 @@ inline uint8_t _get_port_pin(pin_t pin) {
 ///////////////////////////////////////////////////////////
 // PWM
 
-inline void _init_pwm_prescaler(const uint8_t timer) {
+inline void _init_pwm_prescaler(const uint8_t timer, const prescaler_t _) {
   if (timer == 0) {
     TCCR0B |= bit(CS01); // Prescaler 8
   }
@@ -34,8 +34,11 @@ inline void _init_pwm_prescaler(const uint8_t timer) {
 
 inline void _init_pwm(const uint8_t timer) {
   if (timer == 0) {
-    // TCCR0A |= bit(WGM01) | bit(WGM00);
-    TCCR0A |= bit(WGM00); // Phase correct PWM,
+#ifdef PWM_PHASE_CORRECT
+    TCCR0A |= bit(WGM00); // Phase correct PWM
+#else                     // Fast PWM
+    TCCR0A |= bit(WGM01) | bit(WGM00);
+#endif
     _init_pwm_prescaler(timer);
   }
 }
@@ -62,7 +65,7 @@ inline void _set_pwm_on_pin(pin_t pin, const uint16_t value) {
   }
 }
 
-inline void _turn_of_pwm(const uint8_t timer) {
+inline void _turn_off_pwm(const uint8_t timer) {
   if (timer == 0) {
     TCCR0B &= ~(bit(CS02) | bit(CS01) | bit(CS00));
   }
@@ -78,8 +81,8 @@ inline uint8_t _get_timer(const uint8_t pin) { return 0; }
 
 inline uint16_t _adc_read(const uint8_t pin) {
   ADMUX = (ADMUX & 0xFC) | pin;
-  ADCSRA = _BV(ADEN) | _BV(ADSC); // Prescaler of 2
-  while (ADCSRA & _BV(ADSC))
+  ADCSRA = bit(ADEN) | bit(ADSC); // Prescaler of 2
+  while (ADCSRA & bit(ADSC))
     ; // Wait for conversion
   const int16_t result = ADCW;
   ADCSRA = 0; // turn off ADC

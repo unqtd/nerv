@@ -33,15 +33,31 @@ inline uint8_t _get_port_pin(const uint8_t pin) {
 ///////////////////////////////////////////////////////////
 /// Analog
 
-inline void _init_fast_pwm(const uint8_t timer) {
+inline void _init_pwm_prescaler(const uint8_t timer,
+                                const prescaler_t prescaler) {
+  if (timer == 0) {
+    TCCR0B |= bit(CS01); // Prescaler 8
+  } else if (timer == 1) {
+    TCCR1B |= bit(CS11); // Prescaler 8
+  }
+}
+
+inline void _init_pwm(const uint8_t timer) {
   switch (timer) {
   case 0:
+#ifdef PWM_PHASE_CORRECT
+    TCCR0A |= bit(WGM00);
+#else // Fast Pwm
     TCCR0A |= bit(WGM01) | bit(WGM00);
-    TCCR0B |= bit(CS01);
+#endif
     break;
-  case 1:
-    TCCR1A |= bit(WGM10);
-    TCCR1B |= bit(WGM12) | bit(CS11);
+    case 1: // 10 bit
+#ifdef PWM_PHASE_CORRECT
+    TCCR1A |= bit(WGM10) | bit(WGM11);
+#else // Fast PWM
+    TCCR1A |= bit(WGM10) | bit(WGM11);
+    TCCR1B |= bit(WGM12);
+#endif
     break;
   }
 }
@@ -80,7 +96,7 @@ inline void _set_pwm_on_pin(const uint8_t pin, const uint16_t value) {
   }
 }
 
-inline void _turn_of_pwm(const uint8_t timer) {
+inline void _turn_off_pwm(const uint8_t timer) {
   switch (timer) {
   case 0:
     TCCR0B &= ~(bit(CS02) | bit(CS01) | bit(CS00));
@@ -104,7 +120,7 @@ inline uint8_t _get_timer(const uint8_t pin) {
 ///////////////////////////////////////////////////////////
 // ADC
 
-inline uint16_t _adc_read() { return 0; }
+inline uint16_t _adc_read(const uint8_t _) { return 0; }
 
 #endif // !__AVR_ATtiny2313A__
 #endif // !_2313_H
