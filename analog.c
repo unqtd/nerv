@@ -24,13 +24,6 @@ inline void analog_write(pin_t pin, const uint8_t value) {
   }
 }
 
-#define WITH_ADC(BLOCK)                                                        \
-  {                                                                            \
-    _adc_start();                                                              \
-    BLOCK                                                                      \
-    _adc_stop();                                                               \
-  }
-
 inline uint16_t analog_read(pin_t pin) {
   // ...
   return _adc_read(pin);

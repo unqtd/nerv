@@ -75,25 +75,14 @@ inline uint8_t _get_timer(const uint8_t pin) { return 0; }
 ///////////////////////////////////////////////////////////
 // ADC
 
-inline void _adc_start() {
-  // ...
-  ADCSRA = _BV(ADEN) | _BV(ADSC);
-}
-
-inline void _adc_stop() {
-  // ....
-  ADCSRA = 0;
-}
-
-inline void _init_adc_pin(pin_t pin) {
-  // ...
-  ADMUX = (ADMUX & 0xFC) | pin;
-}
-
 inline uint16_t _adc_read(const uint8_t pin) {
-  while (ADCSRA & bit(ADSC))
-    ;
-  return ADCW;
+  ADMUX = (ADMUX & 0xFC) | pin;
+  ADCSRA = _BV(ADEN) | _BV(ADSC); // Prescaler of 2
+  while (ADCSRA & _BV(ADSC))
+    ; // Wait for conversion
+  int16_t result = ADCW;
+  ADCSRA = 0; // turn off ADC
+  return result;
 }
 
 #endif
