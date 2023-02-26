@@ -47,4 +47,11 @@ inline void init_pwm(const uint8_t timer, const prescaler_t prescaler,
     _turn_of_pwm(TIMER);                                                       \
   }
 
+inline const adc_t init_adc(const adc_mode_t mode) {
+  const adc_t adc = {mode};
+  return adc;
+}
+
+inline void stop_adc(adc_t adc) { _stop_adc(adc); }
+
 #endif // !DEBUG

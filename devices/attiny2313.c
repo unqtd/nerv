@@ -128,7 +128,8 @@ inline uint8_t _get_timer(const uint8_t pin) {
 ///////////////////////////////////////////////////////////
 // ADC
 
-inline uint16_t _adc_read(const uint8_t _) { return 0; }
+inline uint16_t _adc_read(const adc_t _2, const uint8_t _) { return 0; }
+inline void _stop_adc(const adc_t adc) {}
 
 #endif // !__AVR_ATtiny2313A__
 #endif // !_2313_H

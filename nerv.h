@@ -30,6 +30,15 @@ typedef enum {
   PHASE_CORRECT
 } pwm_mode_t;
 
+typedef enum {
+  ADC10BIT,
+  ADC8BIT
+} adc_mode_t;
+
+typedef struct {
+  adc_mode_t mode;
+} adc_t;
+
 /////////////////////////////////////////////////////////
 // Функции для реализации под конкретную модель МК.
 
@@ -48,7 +57,8 @@ inline void _turn_off_pwm(const uint8_t timer);
 inline uint8_t _get_timer(pin_t pin);
 
 // ADC
-inline uint16_t _adc_read(pin_t pin);
+inline void _stop_adc(const adc_t adc);
+inline uint16_t _adc_read(const adc_t adc, pin_t pin);
 
 /////////////////////////////////////////////////////////
 /// Подключения используемой реализации.

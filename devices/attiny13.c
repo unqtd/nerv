@@ -39,8 +39,6 @@ inline void _init_pwm(const uint8_t timer, const pwm_mode_t mode) {
     else if (mode == FAST_PWM)
       TCCR0A |= bit(WGM01) | bit(WGM00);
   }
-
-  _init_pwm_prescaler(timer);
 }
 
 inline void _init_pwm_pin(const uint8_t pin) {
@@ -79,15 +77,26 @@ inline uint8_t _get_timer(const uint8_t pin) { return 0; }
 ///////////////////////////////////////////////////////////
 // ADC
 
-inline uint16_t _adc_read(const uint8_t pin) {
-  ADMUX = (ADMUX & 0xFC) | pin;
-  ADCSRA = bit(ADEN) | bit(ADSC); // Prescaler of 2
-  while (ADCSRA & bit(ADSC))
-    ; // Wait for conversion
-  const int16_t result = ADCW;
-  ADCSRA = 0; // turn off ADC
-  return result;
+inline void _stop_adc(adc_t adc) { ADCSRA &= ~(bit(ADEN) | bit(ADSC)); }
+
+inline uint16_t _adc_read(const adc_t adc, const uint8_t pin) {
+  ADMUX = (ADMUX & 0xFC) | pin | (adc.mode == ADC8BIT ? bit(ADLAR) : 0);
+  ADCSRA = bit(ADEN) | bit(ADSC) | (adc.mode == ADC8BIT ? bit(ADPS1) : 0);
+
+  loop_until_bit_is_set(ADCSRA, ADSC);
+
+  return adc.mode == ADC8BIT ? ADCH : ADCW;
 }
+
+// inline uint16_t _adc_read(const uint8_t pin) {
+//   ADMUX = (ADMUX & 0xFC) | pin;
+//   ADCSRA = bit(ADEN) | bit(ADSC); // Prescaler of 2
+//   while (ADCSRA & bit(ADSC))
+//     ; // Wait for conversion
+//   const int16_t result = ADCW;
+//   ADCSRA = 0; // turn off ADC
+//   return result;
+// }
 
 #endif
 #endif /* !_NERV_ATTINY13_H */
