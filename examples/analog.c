@@ -8,7 +8,7 @@ inline long map(long x, long in_min, long in_max, long out_min, long out_max) {
 }
 
 int main() {
-  init_pwm(0, AUTO_PRESCALE);
+  init_pwm(0, AUTO_PRESCALE, PHASE_CORRECT);
 
   init_pin(LED, OUTPUT_ANALOG);
 

@@ -1,4 +1,7 @@
 #define __AVR_ATtiny2313A__
+
+#define PWM10BIT
+
 #include "../nerv.h"
 #include <util/delay.h>
 
@@ -8,7 +11,7 @@
 static void blink_by_overflow_flag();
 
 void _start() {
-  init_pwm(1, AUTO_PRESCALE);
+  init_pwm(1, AUTO_PRESCALE, FAST_PWM);
 
   init_pin(LED, OUTPUT_ANALOG);
   init_pin(LED_OVERFLOW_FLAG, OUTPUT);

@@ -25,6 +25,11 @@ typedef enum Prescaler {
   AUTO_PRESCALE
 } prescaler_t;
 
+typedef enum {
+  FAST_PWM,
+  PHASE_CORRECT
+} pwm_mode_t;
+
 /////////////////////////////////////////////////////////
 // Функции для реализации под конкретную модель МК.
 
@@ -34,7 +39,7 @@ inline uint8_t _get_port_pin(pin_t pin);
 
 // PWM
 inline void _init_pwm_prescaler(const uint8_t timer, const prescaler_t prescaler);
-inline void _init_pwm(const uint8_t timer);
+inline void _init_pwm(const uint8_t timer, const pwm_mode_t mode);
 inline void _init_pwm_pin(pin_t pin);
 inline void _set_pwm_on_pin(pin_t pin, const uint16_t value);
 inline void _turn_off_pwm(const uint8_t timer);

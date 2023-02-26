@@ -42,22 +42,30 @@ inline void _init_pwm_prescaler(const uint8_t timer,
   }
 }
 
-inline void _init_pwm(const uint8_t timer) {
+inline void _init_pwm(const uint8_t timer, const pwm_mode_t mode) {
   switch (timer) {
-  case 0:
-#ifdef PWM_PHASE_CORRECT
-    TCCR0A |= bit(WGM00);
-#else // Fast Pwm
-    TCCR0A |= bit(WGM01) | bit(WGM00);
-#endif
+  case 0: // 8 bit
+    if (mode == PHASE_CORRECT)
+      TCCR0A |= bit(WGM00);
+    else if (mode == FAST_PWM)
+      TCCR0A |= bit(WGM01) | bit(WGM00);
     break;
-    case 1: // 10 bit
-#ifdef PWM_PHASE_CORRECT
-    TCCR1A |= bit(WGM10) | bit(WGM11);
-#else // Fast PWM
-    TCCR1A |= bit(WGM10) | bit(WGM11);
-    TCCR1B |= bit(WGM12);
+  case 1: // 10 bit
+    if (mode == PHASE_CORRECT) {
+#ifdef PWM10BIT
+      TCCR1A |= bit(WGM10) | bit(WGM11);
+#else // PWM8BIT
+      TCCR1A |= bit(WGM10);
 #endif
+    } else if (mode == FAST_PWM) {
+#ifdef PWM10BIT
+      TCCR1A |= bit(WGM10) | bit(WGM11);
+      TCCR1B |= bit(WGM12);
+#else // PWM8BIT
+      TCCR1A |= bit(WGM10);
+      TCCR1B |= bit(WGM12);
+#endif
+    }
     break;
   }
 }
