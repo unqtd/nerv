@@ -15,8 +15,10 @@ typedef enum PinMode {
 /// Устанавливает режим работы пина.
 inline void init_pin(pin_t pin, const pinmode_t mode) {
   port_t const *port = _get_port(pin);
+  #ifndef DISABLE_CHECKING
   if (port == NULL)
     return;
+  #endif
 
   const uint8_t bit = _get_port_pin(pin);
   switch (mode) {
