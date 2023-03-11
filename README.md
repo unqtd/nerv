@@ -14,14 +14,14 @@ P.S. Еще прохожу курс... функционал реализуетс
 ## Установка
 
 Чтобы начать использовать nerv, просто скопируйте репозиторий себе в проект:
-```
-$ git clone https://github.com/dx3mod/nerv.git && rm -rf ./nerv/.git
+```bash
+git clone --depth 1 https://github.com/dx3mod/nerv.git
 ```
 
 Если вы пользуйтесь [yug](https://github.com/dx3mod/yug), то поместите файлы в 
 директорию `vendor`:
-```
-$ git clone https://github.com/dx3mod/nerv.git vendor/nerv && rm -rf ./vendor/nerv/.git
+```bash
+git clone --depth 1 https://github.com/dx3mod/nerv.git vendor/nerv
 ```
 
 Библиотека не предполагается в качестве единицы компиляции, так как подход раздельной 
@@ -36,17 +36,13 @@ $ git clone https://github.com/dx3mod/nerv.git vendor/nerv && rm -rf ./vendor/ne
 | attiny13a   |        |
 
 
-## Руководство пользователя
+## Документация 
 
-* [Руководство по использованию](./docs/guide.md) — комплексное описание возможностей nerv. Предполагается, что вы уже владеете навыками программирования под МК AVR, хотя бы как минимум под платформу Arduino.
-<!-- * [Таблица макросов настройки](./docs/table_of_defines.md) -->
-* [Узкие места](./docs/bottlenecks.md) — набор предостережение и рекомендаций по использованию nerv.
-* [Примеры](./examples/) — полезный материал, чтобы посмотреть на то как решаются те или иные задачи с использованием nerv.
-
-## Руководство разработчика
-
-* [Как добавить поддержку для вашего микроконтроллера?](./docs/how_to_add_new_support_for_your_microcontroller.md) — для тех, кто хочет использовать nerv, но его микроконтроллер не поддерживается из коробки. 
-* Как предложить свои изменения?
+- Для пользователя:
+  * [Руководство по использованию](./docs/guide.md)
+  * [Узкие места](./docs/bottlenecks.md)
+- Для разработчика:
+  * [Как добавить поддержку для вашего микроконтроллера?](./docs/how_to_add_new_support_for_your_microcontroller.md)
 
 ## References 
 
