@@ -15,10 +15,8 @@ typedef enum PinMode {
 /// Устанавливает режим работы пина.
 inline void init_pin(pin_t pin, const pinmode_t mode) {
   port_t const *port = _get_port(pin);
-  #ifndef DISABLE_CHECKING
   if (port == NULL)
     return;
-  #endif
 
   const uint8_t bit = _get_port_pin(pin);
   switch (mode) {
@@ -37,8 +35,8 @@ inline void init_pin(pin_t pin, const pinmode_t mode) {
 
 /// Настраивает выбранный таймер для работы с ШИМ.
 inline void init_pwm(const uint8_t timer, const prescaler_t prescaler,
-                     const pwm_mode_t mode) {
-  _init_pwm(timer, mode);
+                     const pwm_mode_t pwm_mode, const bitmode_t bit_mode) {
+  _init_pwm(timer, pwm_mode, bit_mode);
   _init_pwm_prescaler(timer, prescaler);
 }
 
@@ -49,7 +47,7 @@ inline void init_pwm(const uint8_t timer, const prescaler_t prescaler,
     _turn_of_pwm(TIMER);                                                       \
   }
 
-inline const adc_t init_adc(const adc_mode_t mode) {
+inline const adc_t init_adc(const bitmode_t mode) {
   const adc_t adc = {mode};
   return adc;
 }

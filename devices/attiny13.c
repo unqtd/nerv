@@ -32,7 +32,7 @@ inline void _init_pwm_prescaler(const uint8_t timer, const prescaler_t _) {
   }
 }
 
-inline void _init_pwm(const uint8_t timer, const pwm_mode_t mode) {
+inline void _init_pwm(const uint8_t timer, const pwm_mode_t mode, const bitmode_t _) {
   if (timer == 0) {
     if (mode == PHASE_CORRECT)
       TCCR0A |= bit(WGM00);

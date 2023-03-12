@@ -31,12 +31,13 @@ typedef enum {
 } pwm_mode_t;
 
 typedef enum {
-  ADC10BIT,
-  ADC8BIT
-} adc_mode_t;
+  BIT10,
+  BIT8,
+  BITDEF
+} bitmode_t;
 
 typedef struct {
-  adc_mode_t mode;
+  bitmode_t mode;
 } adc_t;
 
 /////////////////////////////////////////////////////////
@@ -48,7 +49,7 @@ inline uint8_t _get_port_pin(pin_t pin);
 
 // PWM
 inline void _init_pwm_prescaler(const uint8_t timer, const prescaler_t prescaler);
-inline void _init_pwm(const uint8_t timer, const pwm_mode_t mode);
+inline void _init_pwm(const uint8_t timer, const pwm_mode_t pwm_mode, const bitmode_t bit_mode);
 inline void _init_pwm_pin(pin_t pin);
 inline void _set_pwm_on_pin(pin_t pin, const uint16_t value);
 inline void _turn_off_pwm(const uint8_t timer);

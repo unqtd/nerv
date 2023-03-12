@@ -9,8 +9,8 @@
 // }
 
 int main() {
-  init_pwm(0, AUTO_PRESCALE, PHASE_CORRECT);
-  const adc_t adc = init_adc(ADC8BIT);
+  init_pwm(0, AUTO_PRESCALE, PHASE_CORRECT, BITDEF);
+  const adc_t adc = init_adc(BIT8);
 
   init_pin(LED, OUTPUT_ANALOG);
 

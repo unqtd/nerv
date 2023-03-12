@@ -27,7 +27,6 @@ inline void digital_write(pin_t pin, const bool value) {
 
 inline void toggle(pin_t pin) {
   port_t const *port = _get_port(pin);
-
   if (port == NULL)
     return;
 

@@ -2,7 +2,7 @@
 #include <util/delay.h>
 
 int main(void) {
-  init_pwm(0, AUTO_PRESCALE, FAST_PWM);
+  init_pwm(0, AUTO_PRESCALE, FAST_PWM, BITDEF);
   init_pin(7, OUTPUT_ANALOG);
 
   while (1) {
